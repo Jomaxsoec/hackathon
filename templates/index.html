@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prelytics - Business Intelligence Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-theme="light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line me-2"></i>Prelytics
+            </a>
+            <div class="navbar-nav ms-auto">
+                <button class="btn btn-outline-light btn-sm" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-5 pt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-md-4">
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <h4><i class="fas fa-cog me-2"></i>Analysis Configuration</h4>
+                    </div>
+                    
+                    <div class="analysis-form">
+                        <div class="form-group mb-3">
+                            <label for="companyName" class="form-label">Company Name</label>
+                            <input type="text" class="form-control" id="companyName" placeholder="e.g., Apple, Microsoft, Tesla">
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="companyUrl" class="form-label">Company Website</label>
+                            <input type="url" class="form-control" id="companyUrl" placeholder="https://www.company.com">
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 mb-4" onclick="runAnalysis()" id="analyzeBtn">
+                            <i class="fas fa-rocket me-2"></i>Run Analysis
+                        </button>
+                    </div>
+                    
+                    <div class="analysis-modules">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Analysis Modules</h5>
+                        <div class="module-list">
+                            <div class="module-item">
+                                <i class="fas fa-building text-primary"></i>
+                                <span>Client Intelligence</span>
+                            </div>
+                            <div class="module-item">
+                                <i class="fas fa-dollar-sign text-success"></i>
+                                <span>Financial Insights</span>
+                            </div>
+                            <div class="module-item">
+                                <i class="fas fa-cogs text-warning"></i>
+                                <span>Operational Signals</span>
+                            </div>
+                            <div class="module-item">
+                                <i class="fas fa-trophy text-danger"></i>
+                                <span>Competitor Analysis</span>
+                            </div>
+                            <div class="module-item">
+                                <i class="fas fa-chart-pie text-info"></i>
+                                <span>Product Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-lg-9 col-md-8">
+                <div class="main-content">
+                    <!-- Welcome Section -->
+                    <div id="welcomeContent" class="welcome-section">
+                        <div class="hero-section">
+                            <h1 class="display-4 text-primary">
+                                <i class="fas fa-bullseye me-3"></i>Welcome to Prelytics
+                            </h1>
+                            <p class="lead">Get comprehensive business intelligence reports for any company with advanced AI-powered visualizations and insights.</p>
+                        </div>
+                        
+                        <div class="row features-grid mt-5">
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <h3>Client Intelligence</h3>
+                                    <ul>
+                                        <li>Company overview and business model analysis</li>
+                                        <li>Target customer identification</li>
+                                        <li>Strategic goals and initiatives mapping</li>
+                                        <li>Technology stack identification</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <h3>Financial Analysis</h3>
+                                    <ul>
+                                        <li>Real-time financial metrics and ratios</li>
+                                        <li>Revenue growth and profitability analysis</li>
+                                        <li>SWOT analysis based on financial data</li>
+                                        <li>Interactive financial visualizations</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <h3>Operational Intelligence</h3>
+                                    <ul>
+                                        <li>Hiring patterns and talent requirements</li>
+                                        <li>Technology stack and platform analysis</li>
+                                        <li>Strategic initiatives and projects</li>
+                                        <li>Operational gaps and opportunities</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <h3>Competitive Analysis</h3>
+                                    <ul>
+                                        <li>Key competitors identification</li>
+                                        <li>Competitive positioning analysis</li>
+                                        <li>Market differentiation strategies</li>
+                                        <li>Competitive advantages and weaknesses</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                    <h3>Product Analysis</h3>
+                                    <ul>
+                                        <li>Product-market fit assessment</li>
+                                        <li>Service offering recommendations</li>
+                                        <li>Client opportunity mapping</li>
+                                        <li>Strategic partnership potential</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-download"></i>
+                                    </div>
+                                    <h3>Report Export</h3>
+                                    <ul>
+                                        <li>Professional PDF reports</li>
+                                        <li>Interactive dashboard exports</li>
+                                        <li>Data visualization downloads</li>
+                                        <li>Executive summary generation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Results -->
+                    <div id="resultsContent" class="results-section" style="display: none;">
+                        <!-- Tabs -->
+                        <ul class="nav nav-tabs" id="analysisTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="client-tab" data-bs-toggle="tab" data-bs-target="#client" type="button">
+                                    <i class="fas fa-building me-2"></i>Client Intelligence
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="financial-tab" data-bs-toggle="tab" data-bs-target="#financial" type="button">
+                                    <i class="fas fa-dollar-sign me-2"></i>Financial
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="operational-tab" data-bs-toggle="tab" data-bs-target="#operational" type="button">
+                                    <i class="fas fa-cogs me-2"></i>Operational
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="competitor-tab" data-bs-toggle="tab" data-bs-target="#competitor" type="button">
+                                    <i class="fas fa-trophy me-2"></i>Competitors
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="product-tab" data-bs-toggle="tab" data-bs-target="#product" type="button">
+                                    <i class="fas fa-chart-pie me-2"></i>Product
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- Tab Content -->
+                        <div class="tab-content" id="analysisTabContent">
+                            <div class="tab-pane fade show active" id="client" role="tabpanel">
+                                <div class="content-card">
+                                    <h3><i class="fas fa-building text-primary me-2"></i>Client Intelligence Report</h3>
+                                    <div id="clientContent" class="content-text"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="financial" role="tabpanel">
+                                <div class="content-card">
+                                    <h3><i class="fas fa-dollar-sign text-success me-2"></i>Financial Analysis</h3>
+                                    <div id="financialContent" class="content-text"></div>
+                                    <div id="financialCharts" class="charts-section mt-4"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="operational" role="tabpanel">
+                                <div class="content-card">
+                                    <h3><i class="fas fa-cogs text-warning me-2"></i>Operational Signals</h3>
+                                    <div id="operationalContent" class="content-text"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="competitor" role="tabpanel">
+                                <div class="content-card">
+                                    <h3><i class="fas fa-trophy text-danger me-2"></i>Competitor Analysis</h3>
+                                    <div id="competitorContent" class="content-text"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="product" role="tabpanel">
+                                <div class="content-card">
+                                    <h3><i class="fas fa-chart-pie text-info me-2"></i>Product Analysis</h3>
+                                    <div id="productContent" class="content-text"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Export Section -->
+                        <div class="export-section mt-4">
+                            <div class="content-card">
+                                <h4><i class="fas fa-download me-2"></i>Export Report</h4>
+                                <p>Download your comprehensive business intelligence report in multiple formats.</p>
+                                <div class="export-buttons">
+                                    <button class="btn btn-success me-2" onclick="exportPDF()">
+                                        <i class="fas fa-file-pdf me-2"></i>Export PDF
+                                    </button>
+                                    <button class="btn btn-info me-2" onclick="exportText()">
+                                        <i class="fas fa-file-alt me-2"></i>Export Text
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="exportData()">
+                                        <i class="fas fa-database me-2"></i>Export Data
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="loadingContent" class="loading-section" style="display: none;">
+                        <div class="text-center">
+                            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <h4 class="mt-3">Analyzing Company...</h4>
+                            <p class="text-muted">This may take a few moments while we gather intelligence.</p>
+                            <div class="progress mt-3" style="height: 6px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+</body>
+</html>
